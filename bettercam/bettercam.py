@@ -4,9 +4,9 @@ from typing import Tuple
 from threading import Thread, Event, Lock
 import comtypes
 import numpy as np
-from dxcam.core import Device, Output, StageSurface, Duplicator
-from dxcam.processor import Processor
-from dxcam.util.timer import (
+from bettercam.core import Device, Output, StageSurface, Duplicator
+from bettercam.processor import Processor
+from bettercam.util.timer import (
     create_high_resolution_timer,
     set_periodic_timer,
     wait_for_timer,
@@ -16,7 +16,7 @@ from dxcam.util.timer import (
 )
 
 
-class DXCamera:
+class BetterCam:
     def __init__(
         self,
         output: Output,
@@ -66,7 +66,8 @@ class DXCamera:
     def grab(self, region: Tuple[int, int, int, int] = None):
         if region is None:
             region = self.region
-        self._validate_region(region)
+        else:
+            self._validate_region(region)
         frame = self._grab(region)
         return frame
 
@@ -128,7 +129,7 @@ class DXCamera:
         )
         self.__thread = Thread(
             target=self.__capture,
-            name="DXCamera",
+            name="BetterCam",
             args=(region, target_fps, video_mode),
         )
         self.__thread.daemon = True

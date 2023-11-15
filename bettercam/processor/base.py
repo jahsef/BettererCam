@@ -16,6 +16,6 @@ class Processor:
 
     def _initialize_backend(self, backend):
         if backend == ProcessorBackends.NUMPY:
-            from dxcam.processor.numpy_processor import NumpyProcessor
+            from bettercam.processor.numpy_processor import NumpyProcessor
 
             return NumpyProcessor(self.color_mode)

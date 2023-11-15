@@ -1,7 +1,7 @@
 import weakref
 import time
-from dxcam.dxcam import DXCamera, Output, Device
-from dxcam.util.io import (
+from bettercam.bettercam import BetterCam, Output, Device
+from bettercam.util.io import (
     enum_dxgi_adapters,
     get_output_metadata,
 )
@@ -58,7 +58,7 @@ class DXFactory(metaclass=Singleton):
             print(
                 "".join(
                     (
-                        f"You already created a DXCamera Instance for Device {device_idx}--Output {output_idx}!\n",
+                        f"You already created a BetterCam Instance for Device {device_idx}--Output {output_idx}!\n",
                         "Returning the existed instance...\n",
                         "To change capture parameters you can manually delete the old object using `del obj`.",
                     )
@@ -68,7 +68,7 @@ class DXFactory(metaclass=Singleton):
 
         output = self.outputs[device_idx][output_idx]
         output.update_desc()
-        camera = DXCamera(
+        camera = BetterCam(
             output=output,
             device=device,
             region=region,
@@ -76,7 +76,7 @@ class DXFactory(metaclass=Singleton):
             max_buffer_len=max_buffer_len,
         )
         self._camera_instances[instance_key] = camera
-        time.sleep(0.1)  # Fix for https://github.com/ra1nty/DXcam/issues/31
+        time.sleep(0.1)  # Fix for https://github.com/ra1nty/BetterCam/issues/31
         return camera
 
     def device_info(self) -> str:
