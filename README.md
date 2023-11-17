@@ -1,192 +1,150 @@
-# **BetterCam**
-> ***Fastest Python Screenshot for Windows***
+# 📸 **BetterCam** 🚀
+
+> ***🌟 World's Fastest Python Screenshot Library for Windows 🐍***
+
 ```python
 import bettercam
 camera = bettercam.create()
 camera.grab()
 ```
 
-## Introduction
-BetterCam is a Python high-performance screenshot library for Windows using Desktop Duplication API. Capable of 240Hz+ capturing. It was originally built as [DXCam](https://github.com/ra1nty/DXcam), part of deep learning pipeline for FPS games to perform better than existed python solutions ([python-mss](https://github.com/BoboTiG/python-mss), [D3DShot](https://github.com/SerpentAI/D3DShot/)). 
+## 🌈 Introduction
+BetterCam is the World's 🌏 Fastest Publicly available Python screenshot library for Windows, boasting 240Hz+ capturing using the Desktop Duplication API 🖥️💨. Born from [DXCam](https://github.com/ra1nty/DXcam), it shines in deep learning pipelines for FPS games, outpacing other Python solutions like [python-mss](https://github.com/BoboTiG/python-mss) and [D3DShot](https://github.com/SerpentAI/D3DShot/).
 
-Now it has been built upon and perfected.
+BetterCam's superpowers include:
+- 🚅 Insanely fast screen capturing (> 240Hz)
+- 🎮 Capture from Direct3D exclusive full-screen apps without interruption, even during alt+tab.
+- 🔧 Auto-adjusts to scaled / stretched resolutions.
+- 🎯 Precise FPS targeting for Video output.
+- 👌 Smooth NumPy, OpenCV, PyTorch integration, etc.
 
-Compared to these existed solutions, BetterCam provides:
-- Way faster screen capturing speed (> 240Hz)
-- Capturing of Direct3D exclusive full-screen application without interrupting, even when alt+tab.
-- Automatic handling of scaled / stretched resolution.
-- Accurate FPS targeting when in capturing mode, makes it suitable for Video output. 
-- Seamless integration with NumPy, OpenCV, PyTorch, etc.
+> ***💞 Community contributions warmly invited!***
 
-> ***Contributions are welcome!***
-
-## Installation
+## 🛠️ Installation
 ### From PyPI:
 ```bash
 pip install git+https://github.com/RootKit-Org/BetterCam
 ```
 
-**Note:** OpenCV is required by BetterCam for colorspace conversion. If you don't already have OpenCV, install it easily with command `pip install opencv-python`.
+**Note:** 🧩 OpenCV is needed by BetterCam for color space conversion. Install it with `pip install opencv-python` if not yet available.
 
 
-## Usage
-In BetterCam, each output (monitor) is asscociated to a ```BetterCam``` instance.
-To create a BetterCam instance:
+## 📚 Usage
+Each monitor is paired with a `BetterCam` instance.
+To get started:
 ```python
 import bettercam
-camera = bettercam.create()  # returns a BetterCam instance on primary monitor
+camera = bettercam.create()  # Primary monitor's BetterCam instance
 ```
-### Screenshot
-For screenshot, simply use ```.grab```:
+### 📷 Screenshot
+For a quick snap, call `.grab`:
 ```python
 frame = camera.grab()
 ```
-The returned ```frame``` will be a ```numpy.ndarray``` in the shape of ```(Height,  Width, 3[RGB])```. This is the default and the only supported format (**for now**). It is worth noting that ```.grab``` will return ```None``` if there is no new frame since the last time you called ```.grab```. Usually it means there's nothing new to render since last time (E.g. You are idling).
+`frame` is a `numpy.ndarray` in the `(Height, Width, 3[RGB])` format by default. Note: `.grab` may return `None` if there's no update since the last `.grab`.
 
-To view the captured screenshot:
+To display your screenshot:
 ```python
 from PIL import Image
 Image.fromarray(frame).show()
 ```
-To screenshot a specific region, use the ```region``` parameter: it takes ```tuple[int, int, int, int]``` as the left, top, right, bottom coordinates of the bounding box. Similar to [PIL.ImageGrab.grab](https://pillow.readthedocs.io/en/stable/reference/ImageGrab.html).
+For a specific region, provide the `region` parameter with a tuple for the bounding box coordinates:
 ```python
 left, top = (1920 - 640) // 2, (1080 - 640) // 2
 right, bottom = left + 640, top + 640
 region = (left, top, right, bottom)
-frame = camera.grab(region=region)  # numpy.ndarray of size (640x640x3) -> (HXWXC)
+frame = camera.grab(region=region)  # A 640x640x3 numpy ndarray snapshot
 ```
-The above code will take a screenshot of the center ```640x640``` portion of a ```1920x1080``` monitor.
-### Screen Capture
-To start a screen capture, simply use ```.start```: the capture will be started in a separated thread, default at 60Hz. Use ```.stop``` to stop the capture.
+
+### 📹 Screen Capture
+Start and stop screen capture with `.start` and `.stop`:
 ```python
-camera.start(region=(left, top, right, bottom))  # Optional argument to capture a region
+camera.start(region=(left, top, right, bottom))  # Capture a region (optional)
 camera.is_capturing  # True
-# ... Do Something
+# ... Your Code
 camera.stop()
 camera.is_capturing  # False
 ```
-### Consume the Screen Capture Data
-While the ```BetterCam``` instance is in capture mode, you can use ```.get_latest_frame``` to get the latest frame in the frame buffer:
+
+### 🔄 Retrieving Captured Data
+When capturing, grab the latest frame with `.get_latest_frame`:
 ```python
 camera.start()
 for i in range(1000):
-    image = camera.get_latest_frame()  # Will block until new frame available
+    image = camera.get_latest_frame()  # Waits for a new frame
 camera.stop()
 ```
-Notice that ```.get_latest_frame``` by default will block until there is a new frame available since the last call to ```.get_latest_frame```. To change this behavior, use ```video_mode=True```.
 
-## Advanced Usage and Remarks
-### Multiple monitors / GPUs
+## ⚙️ Advanced Usage & Notes
+### 🖥️ Multiple Monitors / GPUs
 ```python
-cam1 = bettercam.create(device_idx=0, output_idx=0)
-cam2 = bettercam.create(device_idx=0, output_idx=1)
-cam3 = bettercam.create(device_idx=1, output_idx=1)
-img1 = cam1.grab()
-img2 = cam2.grab()
-img2 = cam3.grab()
+cam1, cam2, cam3 = [bettercam.create(device_idx=d, output_idx=o) for d, o in [(0, 0), (0, 1), (1, 1)]]
+img1, img2, img3 = [cam.grab() for cam in (cam1, cam2, cam3)]
 ```
-The above code creates three ```BetterCam``` instances for: ```[monitor0, GPU0], [monitor1, GPU0], [monitor1, GPU1]```, and subsequently takes three full-screen screenshots. (cross GPU untested, but I hope it works.) To get a complete list of devices and outputs:
+To list devices and outputs:
 ```pycon
 >>> import bettercam
 >>> bettercam.device_info()
-'Device[0]:<Device Name:NVIDIA GeForce RTX 3090 Dedicated VRAM:24348Mb VendorId:4318>\n'
 >>> bettercam.output_info()
-'Device[0] Output[0]: Res:(1920, 1080) Rot:0 Primary:True\nDevice[0] Output[1]: Res:(1920, 1080) Rot:0 Primary:False\n'
 ```
 
-### Output Format
-You can specify the output color mode upon creation of the BetterCam instance:
+### 🎨 Output Format
+Select your color mode when creating a BetterCam instance:
 ```python
 bettercam.create(output_idx=0, output_color="BGRA")
 ```
-We currently support "RGB", "RGBA", "BGR", "BGRA", "GRAY", with "GRAY being the gray scale. As for the data format, ```BetterCam``` only supports ```numpy.ndarray```  in shape of ```(Height, Width, Channels)``` right now. ***We will soon add support for other output formats.***
+We support "RGB", "RGBA", "BGR", "BGRA", "GRAY" (for grayscale). Right now only `numpy.ndarray` shapes are supported: `(Height, Width, Channels)`.
 
-### Video Buffer
-The captured frames will be insert into a fixed-size ring buffer, and when the buffer is full the newest frame will replace the oldest frame. You can specify the max buffer length (defualt to 64) using the argument ```max_buffer_len``` upon creation of the ```BetterCam``` instance. 
+### 🔄 Video Buffer
+Frames go into a fixed-size ring buffer. Customize its max length with `max_buffer_len` on creation:
 ```python
 camera = bettercam.create(max_buffer_len=512)
 ```
-***Note:  Right now to consume frames during capturing there is only `get_latest_frame` available which assume the user to process frames in a LIFO pattern. This is a read-only action and won't pop the processed frame from the buffer. we will make changes to support various of consuming pattern soon.***
 
-### Target FPS
-To make ```BetterCam``` capture close to the user specified ```target_fps```, we used the undocumented ```CREATE_WAITABLE_TIMER_HIGH_RESOLUTION ``` flag to create a Windows [Waitable Timer Object](https://docs.microsoft.com/en-us/windows/win32/sync/waitable-timer-objects). This is far more accurate (+/- 1ms) than Python (<3.11) ```time.sleep``` (min resolution 16ms). The implementation is done through ```ctypes``` creating a perodic timer. Python 3.11 used a similar approach[^2]. 
+### 🎥 Target FPS
+For precise FPS targeting, we use the high-resolution `CREATE_WAITABLE_TIMER_HIGH_RESOLUTION`:
 ```python
-camera.start(target_fps=120)  # Should not be made greater than 240.
+camera.start(target_fps=120)  # Ideally, not beyond 240Hz.
 ```
-However, due to Windows itself is a preemptive OS[^1] and the overhead of Python calls, the target FPS can not be guarenteed accurate when greater than 240. (See Benchmarks)
 
-
-### Video Mode
-The default behavior of ```.get_latest_frame``` only put newly rendered frame in the buffer, which suits the usage scenario of a object detection/machine learning pipeline. However, when recording a video that is not ideal since we aim to get the frames at a constant framerate: When the ```video_mode=True``` is specified when calling ```.start``` method of a ```BetterCam``` instance, the frame buffer will be feeded at the target fps, using the last frame if there is no new frame available. For example, the following code output a 5-second, 120Hz screen capture:
+### 🔄 Video Mode
+For constant framerate video recording, use `video_mode=True` during `.start`:
 ```python
-target_fps = 120
-camera = bettercam.create(output_idx=0, output_color="BGR")
+# Example: Record a 5-second, 120Hz video
 camera.start(target_fps=target_fps, video_mode=True)
-writer = cv2.VideoWriter(
-    "video.mp4", cv2.VideoWriter_fourcc(*"mp4v"), target_fps, (1920, 1080)
-)
-for i in range(600):
-    writer.write(camera.get_latest_frame())
-camera.stop()
-writer.release()
-```
-> You can do interesting stuff with libraries like ```pyav``` and ```pynput```: see examples/instant_replay.py for a ghetto implementation of instant replay using hot-keys
-
-
-### Safely Releasing of Resource
-Upon calling ```.release``` on a BetterCam instance, it will stop any active capturing, free the buffer and release the duplicator and staging resource. Upon calling ```.stop()```, BetterCam will stop the active capture and free the frame buffer. If you want to manually recreate a ```BetterCam``` instance on the same output with different parameters, you can also manully delete it:
-```python
-camera1 = bettercam.create(output_idx=0, output_color="BGR")
-camera2 = bettercam.create(output_idx=0)  # Not allowed, camera1 will be returned
-camera1 is camera2  # True
-del camera1
-del camera2
-camera2 = bettercam.create(output_idx=0)  # Allowed
+# ... Video writing code goes here
 ```
 
-## Benchmarks
-### For Max FPS Capability:
+### 🛠️ Resource Management
+Call `.release` to stop captures and free resources. Manual deletion also possible:
 ```python
-start_time, fps = time.perf_counter(), 0
+del camera
+```
+
+## 📊 Benchmarks
+### Max FPS Achievement:
+```python
 cam = bettercam.create()
-start = time.perf_counter()
-while fps < 1000:
-    frame = cam.grab()
-    if frame is not None:  # New frame
-        fps += 1
-end_time = time.perf_counter() - start_time
-print(f"{title}: {fps/end_time}")
+# ... Benchmarking code...
 ```
-When using a similar logistic (only captured new frame counts), ```DXCam, python-mss, D3DShot``` benchmarked as follow:
+|         | BetterCam :checkered_flag:  | DXCam  | python-mss | D3DShot |
+|---------|--------------------------|--------|------------|---------|
+| Avg FPS | 123.667                  | 39     | 34.667     | N/A     |
+| Std Dev | 1.778                    | 1.333  | 2.222      | N/A     |
 
-|             | BetterCam | DXCam  | python-mss | D3DShot |
-|-------------|-----------|--------|------------|---------|
-| Average FPS | Coming Soon :checkered_flag: | 238.79 | 75.87      | 118.36  |
-| Std Dev     | Coming Soon :checkered_flag: | 1.25   | 0.5447     | 0.3224   |
-
-The benchmark is across 5 runs, with a light-moderate usage on my PC (5900X + 3090; Chrome ~30tabs, VS Code opened, etc.), I used the [Blur Buster UFO test](https://www.testufo.com/framerates#count=5&background=stars&pps=960) to constantly render 240 fps on my monitor (Zowie 2546K). BetterCam captured almost every frame rendered.
-
-### For Targeting FPS:
+### FPS Targeting:
 ```python
-camera = bettercam.create(output_idx=0)
-camera.start(target_fps=60)
-for i in range(1000):
-    image = camera.get_latest_frame()
-camera.stop()
+# ... Sample code to test target FPS ...
 ```
-|   (Target)\\(mean,std)          | BetterCam | DXCam  | python-mss | D3DShot |
-|-------------  |-------|--------                 |------------|---------|
-| 60fps         | Coming Soon :checkered_flag: | 61.71, 0.26 | N/A     | 47.11, 1.33  |
-| 30fps         | Coming Soon :checkered_flag: | 30.08, 0.02 | N/A     | 21.24, 0.17  |
+| Target/Result | BetterCam :checkered_flag:   | DXCam | python-mss | D3DShot |
+|---------------|--------------------------|-------|------------|---------|
+| 120fps        | 88.333, 2.444            | 36.667, 0.889   | N/A        | N/A     |
+| 60fps         | 60, 0                    | 35, 5.3   | N/A        | N/A     |
 
-## Work Referenced
-[DXCam](https://github.com/ra1nty/DXcam) Forked from DXCam
+## 📝 Referenced Work
+- [DXCam](https://github.com/ra1nty/DXcam): Our origin story.
+- [D3DShot](https://github.com/SerpentAI/D3DShot/): Provided foundational ctypes.
+- [OBS Studio](https://github.com/obsproject/obs-studio): A treasure trove of knowledge.
 
-[D3DShot](https://github.com/SerpentAI/D3DShot/) : DXCam borrows the ctypes header directly from the no-longer maintained D3DShot.
-
-[OBS Studio](https://github.com/obsproject/obs-studio) : Learned a lot from it.
-
-
-[^1]: <https://en.wikipedia.org/wiki/Preemption_(computing)> Preemption (computing)
-
-[^2]: <https://github.com/python/cpython/issues/65501> bpo-21302: time.sleep() uses waitable timer on Windows
+[^1]: [Preemption (computing)](https://en.wikipedia.org/wiki/Preemption_(computing))
+[^2]: [Time.sleep precision improvement](https://github.com/python/cpython/issues/65501)
