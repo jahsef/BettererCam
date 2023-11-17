@@ -1,5 +1,7 @@
 # 📸 **BetterCam** 🚀
+![World's Best AI Aimbot Banner](images/banner.png)
 
+[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 > ***🌟 World's Fastest Python Screenshot Library for Windows 🐍***
 
 ```python
