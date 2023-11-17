@@ -7,7 +7,9 @@ camera.grab()
 ```
 
 ## Introduction
-BetterCam is a Python high-performance screenshot library for Windows using Desktop Duplication API. Capable of 240Hz+ capturing. It was originally built as a part of deep learning pipeline for FPS games to perform better than existed python solutions ([python-mss](https://github.com/BoboTiG/python-mss), [D3DShot](https://github.com/SerpentAI/D3DShot/)). 
+BetterCam is a Python high-performance screenshot library for Windows using Desktop Duplication API. Capable of 240Hz+ capturing. It was originally built as [DXCam](https://github.com/ra1nty/DXcam), part of deep learning pipeline for FPS games to perform better than existed python solutions ([python-mss](https://github.com/BoboTiG/python-mss), [D3DShot](https://github.com/SerpentAI/D3DShot/)). 
+
+Now it has been built upon and perfected.
 
 Compared to these existed solutions, BetterCam provides:
 - Way faster screen capturing speed (> 240Hz)
@@ -21,21 +23,14 @@ Compared to these existed solutions, BetterCam provides:
 ## Installation
 ### From PyPI:
 ```bash
-pip install bettercam
+pip install git+https://github.com/RootKit-Org/BetterCam
 ```
 
-**Note:** OpenCV is required by BetterCam for colorspace conversion. If you don't already have OpenCV, install it easily with command `pip install bettercam[cv2]`.
+**Note:** OpenCV is required by BetterCam for colorspace conversion. If you don't already have OpenCV, install it easily with command `pip install opencv-python`.
 
-### From source:
-```bash
-pip install --editable .
-
-# for installing OpenCV also
-pip install --editable .[cv2]
-```
 
 ## Usage
-In DXCam, each output (monitor) is asscociated to a ```BetterCam``` instance.
+In BetterCam, each output (monitor) is asscociated to a ```BetterCam``` instance.
 To create a BetterCam instance:
 ```python
 import bettercam
@@ -116,9 +111,9 @@ camera = bettercam.create(max_buffer_len=512)
 ### Target FPS
 To make ```BetterCam``` capture close to the user specified ```target_fps```, we used the undocumented ```CREATE_WAITABLE_TIMER_HIGH_RESOLUTION ``` flag to create a Windows [Waitable Timer Object](https://docs.microsoft.com/en-us/windows/win32/sync/waitable-timer-objects). This is far more accurate (+/- 1ms) than Python (<3.11) ```time.sleep``` (min resolution 16ms). The implementation is done through ```ctypes``` creating a perodic timer. Python 3.11 used a similar approach[^2]. 
 ```python
-camera.start(target_fps=120)  # Should not be made greater than 160.
+camera.start(target_fps=120)  # Should not be made greater than 240.
 ```
-However, due to Windows itself is a preemptive OS[^1] and the overhead of Python calls, the target FPS can not be guarenteed accurate when greater than 160. (See Benchmarks)
+However, due to Windows itself is a preemptive OS[^1] and the overhead of Python calls, the target FPS can not be guarenteed accurate when greater than 240. (See Benchmarks)
 
 
 ### Video Mode
@@ -164,10 +159,10 @@ print(f"{title}: {fps/end_time}")
 ```
 When using a similar logistic (only captured new frame counts), ```DXCam, python-mss, D3DShot``` benchmarked as follow:
 
-|             | BetterCam  | python-mss | D3DShot |
-|-------------|--------|------------|---------|
-| Average FPS | 238.79 :checkered_flag: | 75.87      | 118.36  |
-| Std Dev     | 1.25   | 0.5447     | 0.3224   |
+|             | BetterCam | DXCam  | python-mss | D3DShot |
+|-------------|-----------|--------|------------|---------|
+| Average FPS | Coming Soon :checkered_flag: | 238.79 | 75.87      | 118.36  |
+| Std Dev     | Coming Soon :checkered_flag: | 1.25   | 0.5447     | 0.3224   |
 
 The benchmark is across 5 runs, with a light-moderate usage on my PC (5900X + 3090; Chrome ~30tabs, VS Code opened, etc.), I used the [Blur Buster UFO test](https://www.testufo.com/framerates#count=5&background=stars&pps=960) to constantly render 240 fps on my monitor (Zowie 2546K). BetterCam captured almost every frame rendered.
 
@@ -179,13 +174,15 @@ for i in range(1000):
     image = camera.get_latest_frame()
 camera.stop()
 ```
-|   (Target)\\(mean,std)          | BetterCam  | python-mss | D3DShot |
-|-------------  |--------                 |------------|---------|
-| 60fps         | 61.71, 0.26 :checkered_flag: | N/A     | 47.11, 1.33  |
-| 30fps         | 30.08, 0.02 :checkered_flag:  | N/A     | 21.24, 0.17  |
+|   (Target)\\(mean,std)          | BetterCam | DXCam  | python-mss | D3DShot |
+|-------------  |-------|--------                 |------------|---------|
+| 60fps         | Coming Soon :checkered_flag: | 61.71, 0.26 | N/A     | 47.11, 1.33  |
+| 30fps         | Coming Soon :checkered_flag: | 30.08, 0.02 | N/A     | 21.24, 0.17  |
 
 ## Work Referenced
-[D3DShot](https://github.com/SerpentAI/D3DShot/) : BetterCam borrows the ctypes header directly from the no-longer maintained D3DShot.
+[DXCam](https://github.com/ra1nty/DXcam) Forked from DXCam
+
+[D3DShot](https://github.com/SerpentAI/D3DShot/) : DXCam borrows the ctypes header directly from the no-longer maintained D3DShot.
 
 [OBS Studio](https://github.com/obsproject/obs-studio) : Learned a lot from it.
 
