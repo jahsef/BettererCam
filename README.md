@@ -129,19 +129,19 @@ del camera
 cam = bettercam.create()
 # ... Benchmarking code...
 ```
-|         | BetterCam :checkered_flag:  | DXCam  | python-mss | D3DShot |
-|---------|--------------------------|--------|------------|---------|
-| Avg FPS | 123.667                  | 39     | 34.667     | N/A     |
-| Std Dev | 1.778                    | 1.333  | 2.222      | N/A     |
+|         | BetterCam Nvidia GPU :checkered_flag: | BetterCam :checkered_flag: | DXCam  | python-mss | D3DShot |
+|---------|---------------------------------------|--------------------------|--------|------------|---------|
+| Avg FPS | 111.667                               | 123.667                  | 39     | 34.667     | N/A     |
+| Std Dev | 0.889                                 | 1.778                    | 1.333  | 2.222      | N/A     |
 
 ### FPS Targeting:
 ```python
 # ... Sample code to test target FPS ...
 ```
-| Target/Result | BetterCam :checkered_flag:   | DXCam | python-mss | D3DShot |
-|---------------|--------------------------|-------|------------|---------|
-| 120fps        | 88.333, 2.444            | 36.667, 0.889   | N/A        | N/A     |
-| 60fps         | 60, 0                    | 35, 5.3   | N/A        | N/A     |
+| Target/Result | BetterCam Nvidia GPU :checkered_flag: | BetterCam :checkered_flag:   | DXCam | python-mss | D3DShot |
+|---------------|---------------------------------------|--------------------------|-------|------------|---------|
+| 120fps        | 111.667, 0.889                        | 88.333, 2.444            | 36.667, 0.889   | N/A        | N/A     |
+| 60fps         | 60, 0                                 | 60, 0                    | 35, 5.3   | N/A        | N/A     |
 
 ## 📝 Referenced Work
 - [DXCam](https://github.com/ra1nty/DXcam): Our origin story.

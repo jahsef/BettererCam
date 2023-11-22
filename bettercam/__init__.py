@@ -40,6 +40,7 @@ class DXFactory(metaclass=Singleton):
         output_idx: int = None,
         region: tuple = None,
         output_color: str = "RGB",
+        nvidia_gpu: bool = False,
         max_buffer_len: int = 64,
     ):
         device = self.devices[device_idx]
@@ -73,6 +74,7 @@ class DXFactory(metaclass=Singleton):
             device=device,
             region=region,
             output_color=output_color,
+            nvidia_gpu=nvidia_gpu,
             max_buffer_len=max_buffer_len,
         )
         self._camera_instances[instance_key] = camera
@@ -107,6 +109,7 @@ def create(
     output_idx: int = None,
     region: tuple = None,
     output_color: str = "RGB",
+    nvidia_gpu: bool = False,
     max_buffer_len: int = 64,
 ):
     return __factory.create(
@@ -114,6 +117,7 @@ def create(
         output_idx=output_idx,
         region=region,
         output_color=output_color,
+        nvidia_gpu=nvidia_gpu,
         max_buffer_len=max_buffer_len,
     )
 

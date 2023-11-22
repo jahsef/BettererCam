@@ -23,6 +23,7 @@ class BetterCam:
         device: Device,
         region: Tuple[int, int, int, int],
         output_color: str = "RGB",
+        nvidia_gpu: bool = False,
         max_buffer_len=64,
     ) -> None:
         self._output: Output = output
@@ -33,7 +34,10 @@ class BetterCam:
         self._duplicator: Duplicator = Duplicator(
             output=self._output, device=self._device
         )
-        self._processor: Processor = Processor(output_color=output_color)
+        self.nvidia_gpu = nvidia_gpu
+        # if nvidia_gpu:
+        #     import cupy as np
+        self._processor: Processor = Processor(output_color=output_color, nvidia_gpu=nvidia_gpu)
 
         self.width, self.height = self._output.resolution
         self.channel_size = len(output_color) if output_color != "GRAY" else 1

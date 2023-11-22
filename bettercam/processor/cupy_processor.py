@@ -1,15 +1,12 @@
 import ctypes
-import numpy as np
-from numpy import rot90, ndarray, newaxis, uint8, zeros
-from numpy.ctypeslib import as_array
+import cupy as cp
 from .base import Processor
 
 
-class NumpyProcessor(Processor):
+class CupyProcessor(Processor):
     def __init__(self, color_mode):
         self.cvtcolor = None
         self.color_mode = color_mode
-        self.PBYTE = ctypes.POINTER(ctypes.c_ubyte)
         if self.color_mode=='BGRA':
             self.color_mode = None
 
@@ -29,12 +26,9 @@ class NumpyProcessor(Processor):
                 self.cvtcolor = lambda image: cv2.cvtColor(image, cv2_code)
             else:
                 self.cvtcolor = lambda image: cv2.cvtColor(image, cv2_code)[
-                    ..., np.newaxis
+                    ..., cp.newaxis
                 ] 
         return self.cvtcolor(image)
-
-    def shot(self, image_ptr, rect, width, height):
-        ctypes.memmove(image_ptr, rect.pBits, height*width*4)
 
     def process(self, rect, width, height, region, rotation_angle):
         pitch = int(rect.Pitch)
@@ -54,19 +48,20 @@ class NumpyProcessor(Processor):
         buffer = (ctypes.c_char*size).from_address(ctypes.addressof(rect.pBits.contents)+offset)#Pointer arithmetic
         pitch = pitch // 4
         if rotation_angle in (0, 180):
-            image = np.ndarray((height, pitch, 4), dtype=np.uint8, buffer=buffer)
+            image = cp.frombuffer(buffer, dtype=cp.uint8).reshape(height, pitch, 4)
+
         elif rotation_angle in (90, 270):
-            image = np.ndarray((width, pitch, 4), dtype=np.uint8, buffer=buffer)
+            image = cp.frombuffer(buffer, dtype=cp.uint8).reshape(width, pitch, 4)
 
         if not self.color_mode is None:
             image = self.process_cvtcolor(image)
 
         if rotation_angle == 90:
-            image = np.rot90(image, axes=(1, 0))
+            image = cp.rot90(image, axes=(1, 0))
         elif rotation_angle == 180:
-            image = np.rot90(image, k=2, axes=(0, 1))
+            image = cp.rot90(image, k=2, axes=(0, 1))
         elif rotation_angle == 270:
-            image = np.rot90(image, axes=(0, 1))
+            image = cp.rot90(image, axes=(0, 1))
 
         if rotation_angle in (0, 180) and pitch != width:
             image = image[:, :width, :]
