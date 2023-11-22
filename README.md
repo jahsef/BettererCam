@@ -25,7 +25,7 @@ BetterCam's superpowers include:
 ## 🛠️ Installation
 ### From PyPI:
 ```bash
-pip install git+https://github.com/RootKit-Org/BetterCam
+pip install bettercam
 ```
 
 **Note:** 🧩 OpenCV is needed by BetterCam for color space conversion. Install it with `pip install opencv-python` if not yet available.
