@@ -5,7 +5,7 @@ from pathlib import Path
 
 # Add the root directory to Python's path
 sys.path.insert(0, str(Path(__file__).parent.parent))
-
+print(str(Path(__file__).parent.parent))
 import betterercam
 print(betterercam.__file__)  # Should point to your local `betterercam` directory
 
@@ -31,6 +31,7 @@ y_offset = (screen_y - h_w_capture[0])//2
 capture_region = (0 + x_offset, 0 + y_offset, screen_x - x_offset, screen_y - y_offset)
 window_height, window_width = h_w_capture
 
+print(capture_region[3] - capture_region[1], capture_region[2] - capture_region[0])
 # camera = dxcam.create(region = capture_region)
 camera = betterercam.create(region=  capture_region, output_color="BGR", nvidia_gpu=True)
 
