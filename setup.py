@@ -4,13 +4,13 @@ with open("README.md", "r", encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name="bettercam",
+    name="betterercam",
     version="1.0.0",
     description = "A Python high-performance screenshot library for Windows use Desktop Duplication API",
     packages=find_packages(where="find:"),
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/RootKit-Org/BetterCam",
+    url="https://github.com/jahsef/BettererCam",
     author="Qfc9",
     author_email="eharmon@rootkit.org",
     license="MIT",
@@ -33,5 +33,5 @@ setup(
         "cv2": ["opencv-python"],
     },
     python_requires=">=3.8",
-    include_dirs=["bettercam"],
+    include_dirs=["betterercam"],
 )

@@ -1,19 +1,19 @@
-# 📸 **BetterCam** 🚀
+# 📸 **BettererCam** 🚀
 ![World's Best AI Aimbot Banner](images/banner.png)
 
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 > ***🌟 World's Fastest Python Screenshot Library for Windows 🐍***
 
 ```python
-import bettercam
-camera = bettercam.create()
+import betterercam
+camera = betterercam.create()
 camera.grab()
 ```
 
 ## 🌈 Introduction
-BetterCam is the World's 🌏 Fastest Publicly available Python screenshot library for Windows, boasting 240Hz+ capturing using the Desktop Duplication API 🖥️💨. Born from [DXCam](https://github.com/ra1nty/DXcam), it shines in deep learning pipelines for FPS games, outpacing other Python solutions like [python-mss](https://github.com/BoboTiG/python-mss) and [D3DShot](https://github.com/SerpentAI/D3DShot/).
+BettererCam is the World's 🌏 Fastest Publicly available Python screenshot library for Windows, boasting 240Hz+ capturing using the Desktop Duplication API 🖥️💨. Born from [DXCam](https://github.com/ra1nty/DXcam), it shines in deep learning pipelines for FPS games, outpacing other Python solutions like [python-mss](https://github.com/BoboTiG/python-mss) and [D3DShot](https://github.com/SerpentAI/D3DShot/).
 
-BetterCam's superpowers include:
+BettererCam's superpowers include:
 - 🚅 Insanely fast screen capturing (> 240Hz)
 - 🎮 Capture from Direct3D exclusive full-screen apps without interruption, even during alt+tab.
 - 🔧 Auto-adjusts to scaled / stretched resolutions.
@@ -25,18 +25,18 @@ BetterCam's superpowers include:
 ## 🛠️ Installation
 ### From PyPI:
 ```bash
-pip install bettercam
+pip install betterercam
 ```
 
-**Note:** 🧩 OpenCV is needed by BetterCam for color space conversion. Install it with `pip install opencv-python` if not yet available.
+**Note:** 🧩 OpenCV is needed by BettererCam for color space conversion. Install it with `pip install opencv-python` if not yet available.
 
 
 ## 📚 Usage
-Each monitor is paired with a `BetterCam` instance.
+Each monitor is paired with a `BettererCam` instance.
 To get started:
 ```python
-import bettercam
-camera = bettercam.create()  # Primary monitor's BetterCam instance
+import betterercam
+camera = betterercam.create()  # Primary monitor's BettererCam instance
 ```
 ### 📷 Screenshot
 For a quick snap, call `.grab`:
@@ -80,27 +80,27 @@ camera.stop()
 ## ⚙️ Advanced Usage & Notes
 ### 🖥️ Multiple Monitors / GPUs
 ```python
-cam1, cam2, cam3 = [bettercam.create(device_idx=d, output_idx=o) for d, o in [(0, 0), (0, 1), (1, 1)]]
+cam1, cam2, cam3 = [betterercam.create(device_idx=d, output_idx=o) for d, o in [(0, 0), (0, 1), (1, 1)]]
 img1, img2, img3 = [cam.grab() for cam in (cam1, cam2, cam3)]
 ```
 To list devices and outputs:
 ```pycon
->>> import bettercam
->>> bettercam.device_info()
->>> bettercam.output_info()
+>>> import betterercam
+>>> betterercam.device_info()
+>>> betterercam.output_info()
 ```
 
 ### 🎨 Output Format
-Select your color mode when creating a BetterCam instance:
+Select your color mode when creating a BettererCam instance:
 ```python
-bettercam.create(output_idx=0, output_color="BGRA")
+betterercam.create(output_idx=0, output_color="BGRA")
 ```
 We support "RGB", "RGBA", "BGR", "BGRA", "GRAY" (for grayscale). Right now only `numpy.ndarray` shapes are supported: `(Height, Width, Channels)`.
 
 ### 🔄 Video Buffer
 Frames go into a fixed-size ring buffer. Customize its max length with `max_buffer_len` on creation:
 ```python
-camera = bettercam.create(max_buffer_len=512)
+camera = betterercam.create(max_buffer_len=512)
 ```
 
 ### 🎥 Target FPS
@@ -126,10 +126,10 @@ del camera
 ## 📊 Benchmarks
 ### Max FPS Achievement:
 ```python
-cam = bettercam.create()
+cam = betterercam.create()
 # ... Benchmarking code...
 ```
-|         | BetterCam Nvidia GPU :checkered_flag: | BetterCam :checkered_flag: | DXCam  | python-mss | D3DShot |
+|         | BettererCam Nvidia GPU :checkered_flag: | BettererCam :checkered_flag: | DXCam  | python-mss | D3DShot |
 |---------|---------------------------------------|--------------------------|--------|------------|---------|
 | Avg FPS | 111.667                               | 123.667                  | 39     | 34.667     | N/A     |
 | Std Dev | 0.889                                 | 1.778                    | 1.333  | 2.222      | N/A     |
@@ -138,7 +138,7 @@ cam = bettercam.create()
 ```python
 # ... Sample code to test target FPS ...
 ```
-| Target/Result | BetterCam Nvidia GPU :checkered_flag: | BetterCam :checkered_flag:   | DXCam | python-mss | D3DShot |
+| Target/Result | BettererCam Nvidia GPU :checkered_flag: | BettererCam :checkered_flag:   | DXCam | python-mss | D3DShot |
 |---------------|---------------------------------------|--------------------------|-------|------------|---------|
 | 120fps        | 111.667, 0.889                        | 88.333, 2.444            | 36.667, 0.889   | N/A        | N/A     |
 | 60fps         | 60, 0                                 | 60, 0                    | 35, 5.3   | N/A        | N/A     |

@@ -1,10 +1,10 @@
 """A Minimal example of creating a ghetto instant replay with hotkeys.
-Took less than 5 minutes to write using pyav + bettercam + pynput.
+Took less than 5 minutes to write using pyav + betterercam + pynput.
 The code is shit but you got the idea.
 """
 from collections import deque
 from threading import Event, Lock
-import bettercam
+import betterercam
 import av
 from pynput import keyboard
 
@@ -20,7 +20,7 @@ stream = container.add_stream("mpeg4", rate=target_fps)
 stream.pix_fmt, stream.height, stream.width = "yuv420p", 1080, 1920
 stream.bit_rate = 8_000_000
 
-camera = bettercam.create(output_color="RGB")
+camera = betterercam.create(output_color="RGB")
 camera.start(target_fps=target_fps, video_mode=True)
 
 

@@ -4,9 +4,9 @@ from typing import Tuple
 from threading import Thread, Event, Lock
 import comtypes
 import numpy as np
-from bettercam.core import Device, Output, StageSurface, Duplicator
-from bettercam.processor import Processor
-from bettercam.util.timer import (
+from betterercam.core import Device, Output, StageSurface, Duplicator
+from betterercam.processor import Processor
+from betterercam.util.timer import (
     create_high_resolution_timer,
     set_periodic_timer,
     wait_for_timer,
@@ -16,7 +16,7 @@ from bettercam.util.timer import (
 )
 
 
-class BetterCam:
+class BettererCam:
     def __init__(
         self,
         output: Output,
@@ -133,7 +133,7 @@ class BetterCam:
         )
         self.__thread = Thread(
             target=self.__capture,
-            name="BetterCam",
+            name="BettererCam",
             args=(region, target_fps, video_mode),
         )
         self.__thread.daemon = True

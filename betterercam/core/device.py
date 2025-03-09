@@ -2,8 +2,8 @@ import ctypes
 from dataclasses import dataclass
 from typing import List
 import comtypes
-from bettercam._libs.d3d11 import *
-from bettercam._libs.dxgi import *
+from betterercam._libs.d3d11 import *
+from betterercam._libs.dxgi import *
 
 
 @dataclass

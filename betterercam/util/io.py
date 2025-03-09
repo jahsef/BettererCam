@@ -2,13 +2,13 @@ import ctypes
 from typing import List
 from collections import defaultdict
 import comtypes
-from bettercam._libs.dxgi import (
+from betterercam._libs.dxgi import (
     IDXGIFactory1,
     IDXGIAdapter1,
     IDXGIOutput1,
     DXGI_ERROR_NOT_FOUND,
 )
-from bettercam._libs.user32 import (
+from betterercam._libs.user32 import (
     DISPLAY_DEVICE,
     MONITORINFOEXW,
     DISPLAY_DEVICE_ACTIVE,

@@ -19,12 +19,12 @@ class Processor:
 
     def _initialize_backend(self, backend):
         if backend == ProcessorBackends.NUMPY:
-            from bettercam.processor.numpy_processor import NumpyProcessor
+            from betterercam.processor.numpy_processor import NumpyProcessor
 
             return NumpyProcessor(self.color_mode)
         
         elif backend == ProcessorBackends.CUPY:
-            from bettercam.processor.cupy_processor import CupyProcessor
+            from betterercam.processor.cupy_processor import CupyProcessor
 
             return CupyProcessor(self.color_mode)
         

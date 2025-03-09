@@ -1,9 +1,9 @@
 import ctypes
 from dataclasses import dataclass, InitVar
-from bettercam._libs.d3d11 import *
-from bettercam._libs.dxgi import *
-from bettercam.core.device import Device
-from bettercam.core.output import Output
+from betterercam._libs.d3d11 import *
+from betterercam._libs.dxgi import *
+from betterercam.core.device import Device
+from betterercam.core.output import Output
 
 
 @dataclass
