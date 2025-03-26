@@ -1,7 +1,7 @@
 import cupy as cp
 import time
 # Create a large BGRA image (4K resolution)
-img = cp.random.randint(0, 256, (2160, 3840, 4), dtype=cp.uint8)
+img = cp.random.randint(0, 256, (2160, 3840, 512), dtype=cp.uint8)
 
 # Advanced indexing (copy)
 start = time.perf_counter_ns()

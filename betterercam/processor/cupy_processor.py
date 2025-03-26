@@ -87,5 +87,5 @@ class CupyProcessor(Processor):
         # Crop to target dimensions
         cropped_image = image[:target_height, :target_width, :]
 
-        return cp.ascontiguousarray(cropped_image)
-        # return cropped_image
+        # return cp.ascontiguousarray(cropped_image)
+        return cropped_image

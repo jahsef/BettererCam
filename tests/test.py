@@ -25,7 +25,7 @@ import cupy as cp
 
 screen_x = 2560
 screen_y = 1440
-h_w_capture = (896,1440)
+h_w_capture = (320,320)
 x_offset = (screen_x - h_w_capture[1])//2
 y_offset = (screen_y - h_w_capture[0])//2
 capture_region = (0 + x_offset, 0 + y_offset, screen_x - x_offset, screen_y - y_offset)
